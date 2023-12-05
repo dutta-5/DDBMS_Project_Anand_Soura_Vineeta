@@ -84,6 +84,9 @@ class Blockchain:
         block_index = 1
         while block_index < len(chain):
             block = chain[block_index]
+            if("Create" in chain[block_index]["transactions"][0]["data"].replace("\'", "\"")):
+                txn = pd.DataFrame(json.loads(chain[block_index]["transactions"][0]["data"].replace("\'", "\""))["Create"])
+                print("Created following relation from current status in chain - \n", txn)
             if block['previous_hash'] != self.hash(previous_block):
                 return False
             previous_proof = previous_block['proof']
